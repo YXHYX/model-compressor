@@ -53,16 +53,15 @@ low-degree terms, throw away the rest.
 ### 1. From a surface to a function on the sphere
 
 Center the mesh at $c$ (its centroid by default). For a direction
-
-$$
+```math
 \hat n(\theta,\phi) = (\sin\theta\cos\phi,\ \sin\theta\sin\phi,\ \cos\theta), \qquad \theta\in[0,\pi],\ \phi\in[0,2\pi)
-$$
+```
 
 cast a ray $c + t\,\hat n(\theta,\phi),\ t>0$ and define
 
-$$
+```math
 r(\theta,\phi) = \min\{\, t > 0 : c + t\,\hat n(\theta,\phi) \in \partial M \,\}
-$$
+```
 
 i.e. the distance to the *closest* surface crossing along that ray. This
 is exactly "the distance to the point on the model closest to the line
@@ -76,27 +75,27 @@ $r(\theta,\phi)$ is a real number (a distance), so it's expanded in the
 **real** orthonormal spherical-harmonic basis rather than the complex one
 usually seen in textbooks:
 
-$$
+```math
 R_l^m(\theta,\phi) =
 \begin{cases}
 N_l^0\, P_l^0(\cos\theta), & m = 0 \\[6pt]
 \sqrt{2}\,(-1)^m\, N_l^m\, P_l^m(\cos\theta)\, \cos(m\phi), & m > 0 \\[6pt]
 \sqrt{2}\,(-1)^{|m|}\, N_l^{|m|}\, P_l^{|m|}(\cos\theta)\, \sin(|m|\phi), & m < 0
 \end{cases}
-$$
+```
 
 where $P_l^m$ is the associated Legendre polynomial (Condon–Shortley phase
 included) and
 
-$$
+```math
 N_l^m = \sqrt{\frac{2l+1}{4\pi}\,\frac{(l-m)!}{(l+m)!}}
-$$
+```
 
 is the normalization that makes the basis orthonormal on the sphere:
 
-$$
+```math
 \int_{S^2} R_l^m(\theta,\phi)\, R_{l'}^{m'}(\theta,\phi)\; d\Omega = \delta_{ll'}\,\delta_{mm'}, \qquad d\Omega = \sin\theta\; d\theta\, d\phi
-$$
+```
 
 The $\cos(m\phi)$ / $\sin(m\phi)$ factor *is* a real Fourier series in the
 azimuth $\phi$; $P_l^m(\cos\theta)$ extends it smoothly over the polar
@@ -112,39 +111,39 @@ below).
 
 Project $r$ onto the basis:
 
-$$
+```math
 c_l^m = \int_{S^2} r(\theta,\phi)\, R_l^m(\theta,\phi)\; d\Omega
-$$
+```
 
 The full (lossless, in the band-limited sense) representation needs
 infinitely many $l$. The **compressed representation** truncates at a
 chosen degree $N$:
 
-$$
+```math
 \Big\{\, c_l^m \;:\; 0 \le l \le N,\ -l \le m \le l \,\Big\}, \qquad (N+1)^2 \text{ real numbers total}
-$$
+```
 
 That's the entire compression knob. Small $N$ keeps only broad, low-frequency
 shape; large $N$ keeps fine surface detail, at the cost of more stored
 coefficients. The compression ratio against the original mesh (which
 stores $V$ vertices and $F$ faces) is
 
-$$
+```math
 \text{ratio} = \frac{12V + 12F \text{ bytes (float32 verts + int32 faces)}}{(N+1)^2 \cdot 8\text{ bytes (float64 coeffs)} + \text{small header}}
-$$
+```
 
 ### 4. Reconstruction — the decompression step
 
-$$
+```math
 \hat r_N(\theta,\phi) = \sum_{l=0}^{N}\ \sum_{m=-l}^{l} c_l^m\, R_l^m(\theta,\phi)
-$$
+```
 
 evaluated at any grid of directions you like (not necessarily the one used
 for decomposition), then mapped back into 3D and re-triangulated:
 
-$$
+```math
 p(\theta,\phi) = c + \hat r_N(\theta,\phi)\,\hat n(\theta,\phi)
-$$
+```
 
 ### 5. Numerical integration
 
