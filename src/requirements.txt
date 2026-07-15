@@ -1,0 +1,15 @@
+# Core (required)
+numpy>=1.24
+scipy>=1.15          # needs scipy.special.sph_legendre_p / sph_harm_y
+trimesh>=4.0
+
+# Optional, speeds up ray casting ~20x via an AABB tree
+rtree
+
+# Optional, only needed for visualize_matplotlib.py
+matplotlib
+
+# Optional, only needed for visualize_mayavi.py -- see README for the
+# VTK-version caveat before installing.
+mayavi
+PyQt5
