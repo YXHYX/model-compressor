@@ -199,16 +199,8 @@ Example numbers from a test run (a synthetic "lumpy" test shape, see `demo.py`):
 pip install numpy scipy trimesh
 pip install rtree            # optional: ~20x faster ray casting (AABB tree)
 pip install matplotlib        # optional: headless plots via visualize_matplotlib.py
-pip install mayavi PyQt5      # optional: interactive 3D via visualize_mayavi.py
+pip install vispy PyQt5      # optional: interactive 3D via visualize_vispy.py
 ```
-
-> **Mayavi note:** as of this writing, `mayavi`'s build doesn't yet
-> support VTK ≥ 9.3, which is the only VTK on PyPI for recent Python
-> versions. If `pip install mayavi` fails, either pin an older VTK
-> (`pip install "vtk<9.3" mayavi`, needs Python ≤3.11) or use
-> `conda install -c conda-forge mayavi`, where the compatibility matrix is
-> already solved. `visualize_matplotlib.py` needs nothing beyond
-> matplotlib and works headless in the meantime.
 
 ## Usage
 
@@ -243,9 +235,9 @@ mesh_light.export("preview.obj")
 ```
 
 ```python
-import visualize_mayavi as viz          # interactive 3D (your machine)
+import visualize_vispy as viz          # interactive 3D (your machine)
 viz.compare_original_vs_reconstructions(core.load_mesh("my_model.obj"), compressed, [4, 8, 16, 32])
-from mayavi import mlab; mlab.show()
+#add vispy
 
 import visualize_matplotlib as vplt     # headless PNGs
 vplt.compare_original_vs_reconstructions(core.load_mesh("my_model.obj"), compressed, [4, 8, 16], savepath="compare.png")
@@ -269,8 +261,8 @@ vplt.compare_original_vs_reconstructions(core.load_mesh("my_model.obj"), compres
 
 | File | Purpose |
 |---|---|
-| `core.py` | Mesh I/O, ray casting, the spherical-harmonic transform, mesh reconstruction, compressed-file I/O, error metrics. No GUI dependencies. |
-| `visualize_mayavi.py` | Interactive 3D visualization with Mayavi. |
+| `core.py` | Mesh I/O, ray casting, the spherical-harmonic transform, mesh reconstruction, file compression, error metrics. No GUI dependencies. |
+| `visualize_vispy.py` | Interactive 3D visualization with VisPy. |
 | `visualize_matplotlib.py` | Headless-friendly fallback visualizations. |
 | `demo.py` | End-to-end CLI: compress, report, reconstruct, plot. |
-| `assets/` | README images — pipeline diagram is included; add your own comparison/graph renders here. |
+| `assets/` | README images — pipeline diagram is included; comparison/graph and other detail for the repo. |
